@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>陈震涛 · 个人介绍</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232563A8'/%3E%3Ctext x='32' y='44' font-size='32' text-anchor='middle' fill='white' font-family='sans-serif' font-weight='700'%3E陈%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap">
+<style>
+:root{
+  --ink:#16283A;
+  --blue:#2563A8;
+  --blue-deep:#1B4B7E;
+  --blue-soft:#E9F1FA;
+  --line:#D7E3EF;
+  --muted:#5A7186;
+  --bg:#FFFFFF;
+  --bg-alt:#F5F8FC;
+  --radius:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:"Noto Sans SC","Microsoft YaHei",system-ui,-apple-system,sans-serif;
+  color:var(--ink);background:var(--bg);line-height:1.7;
+}
+/* ===== 顶部工具栏 ===== */
+.toolbar{
+  position:sticky;top:0;z-index:50;
+  display:flex;align-items:center;gap:12px;
+  padding:12px 24px;background:rgba(255,255,255,.92);
+  border-bottom:1px solid var(--line);backdrop-filter:blur(8px);
+}
+.toolbar .brand{font-weight:700;color:var(--blue-deep);font-size:15px;letter-spacing:.04em}
+.toolbar .spacer{flex:1}
+.btn{
+  border:1px solid var(--line);background:#fff;color:var(--ink);
+  border-radius:8px;padding:7px 14px;font-size:13px;cursor:pointer;
+  font-family:inherit;transition:all .15s;
+}
+.btn:hover{border-color:var(--blue);color:var(--blue)}
+.btn.primary{background:var(--blue);border-color:var(--blue);color:#fff}
+.btn.primary:hover{background:var(--blue-deep)}
+.to-top{
+  position:fixed;right:24px;bottom:28px;z-index:60;
+  width:44px;height:44px;border-radius:50%;
+  border:1px solid var(--line);background:var(--blue);color:#fff;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+  box-shadow:0 4px 12px rgba(37,99,168,.28);
+  opacity:0;visibility:hidden;transform:translateY(8px);transition:all .2s;
+}
+.to-top.show{opacity:1;visibility:visible;transform:translateY(0)}
+.to-top:hover{background:var(--blue-deep)}
+.to-top svg{width:20px;height:20px}
+.edit-hint{
+  display:none;padding:10px 24px;background:#FFF6E6;color:#8A5A00;
+  font-size:13px;border-bottom:1px solid #F3E0B8;
+}
+body.editing .edit-hint{display:block}
+body.editing [data-editable]{outline:1px dashed var(--blue);outline-offset:2px;border-radius:4px;background:#FAFCFF}
+body.editing [data-editable]:focus{outline-style:solid;background:#fff}
+
+/* ===== 容器 ===== */
+.wrap{max-width:960px;margin:0 auto;padding:0 24px}
+
+/* ===== Hero ===== */
+.hero{background:var(--blue-soft);padding:48px 0 36px;border-bottom:1px solid var(--line)}
+.hero h1{font-size:38px;font-weight:700;letter-spacing:.06em}
+.hero .tagline{margin-top:8px;font-size:17px;color:var(--blue-deep);font-weight:500}
+.hero .chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.chip{
+  background:#fff;border:1px solid var(--line);border-radius:999px;
+  padding:6px 14px;font-size:13px;color:var(--muted);
+}
+.chip b{color:var(--ink);font-weight:500}
+.hero .edu{margin-top:18px;font-size:14.5px;color:var(--ink)}
+.hero .intro{margin-top:14px;max-width:720px;font-size:14.5px;color:#33475B}
+.hero-inner{display:flex;gap:28px;align-items:flex-start;justify-content:space-between}
+.hero-info{flex:1;min-width:0}
+.hero-photo{width:3.46cm;height:4.43cm;object-fit:cover;border-radius:6px;flex:none;border:1px solid var(--line)}
+
+/* ===== 技能 ===== */
+.skills{display:flex;flex-wrap:wrap;gap:10px;padding:22px 0;border-bottom:1px solid var(--line)}
+.skill{font-size:13px;background:var(--bg-alt);border:1px solid var(--line);color:var(--blue-deep);border-radius:8px;padding:6px 12px}
+
+/* ===== 锚点导航 ===== */
+.nav{display:flex;flex-wrap:wrap;gap:8px;padding:22px 0 4px}
+.nav a{
+  text-decoration:none;font-size:14px;color:var(--blue);
+  padding:8px 16px;border:1px solid var(--line);border-radius:8px;background:#fff;
+}
+.nav a:hover{background:var(--blue-soft)}
+
+/* ===== 板块 ===== */
+section{padding:36px 0 8px}
+.sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:20px}
+.sec-num{
+  font-size:14px;font-weight:700;color:#fff;background:var(--blue);
+  border-radius:8px;padding:3px 10px;letter-spacing:.05em;
+}
+.sec-head h2{font-size:23px;font-weight:700}
+.sec-head .sub{color:var(--muted);font-size:13.5px}
+
+/* ===== 卡片 ===== */
+.card{
+  border:1px solid var(--line);border-radius:var(--radius);
+  background:#fff;padding:22px 24px;margin-bottom:16px;
+}
+.card-top{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px;margin-bottom:6px}
+.card-top .role{font-size:16.5px;font-weight:700}
+.card-top .org{font-size:14.5px;color:var(--blue-deep);font-weight:500}
+.card-top .date{margin-left:auto;font-size:13px;color:var(--muted)}
+.card ul{list-style:none;margin-top:10px}
+.card li{position:relative;padding-left:18px;font-size:14.5px;color:#33475B;margin-bottom:8px}
+.card li::before{content:"";position:absolute;left:2px;top:11px;width:6px;height:6px;border-radius:50%;background:var(--blue)}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.tag{font-size:12px;color:var(--muted);background:var(--bg-alt);border-radius:6px;padding:3px 10px}
+
+/* ===== 页脚 ===== */
+footer{margin-top:40px;border-top:1px solid var(--line);padding:24px 0 40px;color:var(--muted);font-size:13.5px;text-align:center}
+footer .contact{margin-bottom:6px}
+
+@media (max-width:640px){
+  .hero h1{font-size:30px}
+  .hero-inner{flex-direction:column;gap:16px}
+  .hero-photo{align-self:flex-end}
+  .card-top .date{margin-left:0;width:100%}
+  .toolbar{padding:10px 16px}
+  .wrap{padding:0 16px}
+  .to-top{right:16px;bottom:20px}
+}
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <span class="brand">陈震涛 · 个人介绍</span>
+  <span class="spacer"></span>
+  <button class="btn" id="editBtn" type="button">进入编辑</button>
+  <button class="btn primary" id="exportBtn" type="button">导出 HTML</button>
+  <button class="btn" id="resetBtn" type="button">恢复默认</button>
+</div>
+<div class="edit-hint">编辑模式已开启：直接点击文字即可修改，内容会自动保存在本机浏览器；点击「导出 HTML」可下载当前版本的网页文件。</div>
+
+<button class="to-top" id="toTop" type="button" aria-label="返回顶部">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="M5 12l7-7 7 7"/></svg>
+</button>
+
+<div id="portfolio">
+
+  <!-- ===== 顶部：基本信息 ===== -->
+  <header class="hero">
+    <div class="wrap hero-inner">
+      <div class="hero-info">
+      <h1 data-editable>陈震涛</h1>
+      <div class="tagline" data-editable>2027 届本科 · 地理空间信息工程 ｜ 运营 / 项目 / 产品 / 市场多方向实践</div>
+      <div class="chips">
+        <span class="chip" data-editable>电话：<b>151-0590-7921</b></span>
+        <span class="chip" data-editable>邮箱：<b>2476456746@qq.com</b></span>
+        <span class="chip" data-editable>现居：<b>安徽合肥</b></span>
+        <span class="chip" data-editable>生日：<b>2005.07</b></span>
+      </div>
+      <div class="edu" data-editable>安徽农业大学 · 地理空间信息工程（本科）｜ 2023.09 – 2027.06 ｜ 主修空间数据库技术、空间数据采集与管理、数据分析与可视化、ArcGIS、CAD 制图</div>
+      <p class="intro" data-editable>跨模块实践经历：3 段暑期教培机构实习，担任班长、社团副社长、三下乡带队副队长与学院办公室助理；熟练 Excel 台账搭建与数据复盘，日常使用 ChatGPT、豆包、Claude 辅助方案构思与文案撰写；做事严谨、执行力强，擅长多方协调与事项闭环。</p>
+      </div>
+      <img class="hero-photo" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEA3ADcAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAF/ASsDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCfJp3aiivpLnzYhpKUikoAWjHFJmlyaACikzS5oAKB0oooAXtSYozRQAU4UgpaAEpRRSUAOptGaTNACnmkxS0uKAGfjS9qXFGKLgJgiinUlACUuaQ9KKAA0UUUAGKUcUUZoAMmkOaWigBMGjtS5ooABQaXFFMBMUYpQKPwoAQUuKQUueKQBim4pc0UAJikp1ITmgBMU4CilFACEUlOPNJigBtFPxSYoABRmiigAopcUUgG0UpB600soOMj86AFpc0i8ilxTAWigUHpQAmc0UYpaQDTRS0EUwEoFFJQA6kpB1pcUAJmjNFFAC0A80lKOtADqBzSZpRgUAKBS5pM0c0ANxig040lADaWgigDmgBDRinUYpANwc0pBp2KKYDRS0tFACUuKa7rGuWOBVeWeTGdyxJ/ebqfpSbsCVy1ioXuIoyQzjI6jrisHVdbsbM+X808zfwk9P6VzN9qzNEZpYIYUHGNoyfYe/8AniuWri4Q0OqlhJ1Neh2N14k061BZ5WIHUqpxWNf+N0RgltH5an/lrMD+g71wrT3V5doQzKcZRVHQeoH9ao3bKkjAu0rk8sTn9a4Z42pLbQ7o4GnHfU7N9aW8P73XZs+sZVFH/ATioY/EF1YSKba/N3HjLJMnIH864oJI/IUgdcmgts43Hio+syL+rRPVtL8X216m0qY7gf8ALM9x7HvW+l58iSuF8p+NynOPrXhgnbcrMdxHcmunsvFM1tp72plLZGAz87V9fc110cZde8ctXB/yHpz3sEbbTIobrgnFQvrNnF/rJkUe5xXkV3rd1OctM4bOSQxyfr6fhVWPUblCJFlYE9880SxyWyEsD3Z7RDrFjcHEVwjH03AH9auK+4cV5DbeJtQhVeUlRT0ZBn8a6DTvFNlNt3M9k+eNpylXDGRloyKmClHVHoGRS1kWuoz+WHYrcw93jPzD8O9acM0cy7o2DD/P612RmmckoOI6kpxpCKokQdacKQCnUAJikxTsUYoAbiilpMUAFOoApcUAJ3pcUoFLigBh6UUppKQCZpR0pMUoFABS0YopgFJS4pKAChyI42djgKMmjOKoXO28kdZTi2h+ZwTwzdgfYdfyqZOw4q7IHvmkzJBGHbHDv/q0H9fw4965LWtfmy0dtdsznjzVGM/7o6/riqviXxObpzZWgbyicYHBf0/Cs22s0tla4u5M3IG5Yh/D6E+n0rycRiW3yxZ62HwySUpIsQwpaobm4mJkb77sckn0H09f/wBVU8HULkSNuWAf6vd6eoHb61QuL8yzBpVDhRhIv4V+tW7Z2nHmXThIQfunjcfp3rgO4tT2jzRmCzbqfnKnP5n/ABP0FUH060teZJllcclUbIX6npV+7voUjSFVlkB/hP7tPyHJFYckr3L7jtSNT8oAwFH0HemAXU4Y7YsKuckE5JPvVQjIyWyfSgnLkDgUuMGmDGliEA9DTSTmrEUJk5I+nuatvZs1oXAG1Bkn0z2ouKxnKcnGM0/aMcVHgg0/cUfnkHsaYhyM0TdSPWryw+eRsP7wjhuzD3qsuxgAQSMdfSr0dtLbKlxFl4epAwcUiky9pl5fadMEico3/PJ+jfQ9q7LTNXjvQZIZBDepw8T8Z/xFc3ZumqWw3KN6dCOppPszeerhzFOPuuOv09/8+1bUq8qb8jGrQjUXmel2l2l1GSBtkXh0J5U/4e9WK4zSNZZpgjlRdoMbc4WUeg9K7CKVJ4llQ/Kex6g+h969mjVVSN0eNWounKzH0UUVsYi0lGaM0ALjik4pQaQDmgBRTqbS0AKOtFJS0ANpKdRQA2jmlooATmlopaACkNOxTSKAInB2nBxXD+J9dMFsbaFhmU5Cj+L3PsOB7n6V0/iDV4NG0t55W+dvljUdWavHrm7e6eSaZtztwPYVwYyvyrlW53YOjzPnewQysLgy5JkbOPU1YvJZYEaORv30g+YA52jrj61HZMtqfPb/AFgGVHp/n/CqzeZcSSSZJxyzH3/rXkHrjECIuWOD6VetRNMQttFtcj/Wt1A9fb8Ksafopl/f3I2xoMlT/Eew/qa2YlijQ28AAkflmx0H+egoAw/sQN00UbFyuCznqx//AF07UrUWMEduR++I3FV5x7VuqbfTbc4UF/75OS7Y6+3SqLWctxI01zuzL78n/wCuf0H1xQBhQWhYF3+VFG526/QfnVSQ/OeOnb0rSv5/McwW+BFGeo4yemf6D/69UPJ6BeST1pgPgIGM9M5NabYmsCSed2MZ+8cf4CstPlZv4sDA+tW7Vg22PJHJP6cVI7FCWNkkKsuCOMUpXKIfUVLdJ+83DgHnpikUAIuQTgnOKdwsEP7txkMPfGR+Va9lJJYtuUBoX6oeR/8Aqql5LLFv4Mbcg/z/AB6Vds2MLeTIDs+8B1x9PUH/AD7m4I24bS3Dia2dUDAF16Y9x61JP5c2baSXbKCdrH+9/gRWLfxyaVOhiyYTynp+H+HpUtxcrfQKykLKgBVu49j60hklwrxS+coyysFlUHkHsf8AP9a67wxra3W6CRv3mAef4h0z9fWuDh1V1nXzFBZRtcE/fWrNzKbaeK8s5CgdtyEfwnuP8+/rW9Cs6Urowr0VVhZnrlFZuiaomq2CSjCyDiRc9GrTr3oSUlzI8CUXF8rEzRRRVCFFFAooAKM0lKKAFozRSHrQA+koo7UAJQelJSjrQA3vT80hwKKADPNMlkWKNnc4VRkmnVx/jbWBa2v2UMCW52d26/oKzqzUIuTLpU3Ukoo47xbrp1rVMx5+zxfLGP5msIAbgGPygjNMeQtIWPJzn6mnhNxVMHk8n3rwJyc5OTPepxUIqKLthbNeSF2UsGPyqB1Pp9P8PatSOKJGfcq+Va/Mf9uQ8AfSq9rN9gFzKq/OieXGOpXP9etZzXT+R5QY4Lb2Pr6VBoa11qpwYkYBUzkDux6/lVaO98mPaoLO3UZ5/GssFicjJqSIOzgIu5ieO+TQCNm3cFo5JmHyd8/5/wAirV9fNcRTLAvyqhDMO3OMD9f1qGysI41WS5JaQ9FrQjhDwlUXGWyMd+wP16mhsZzMkROFYEMD2HA/+vSz2+2ZYF6AYcjr6kfzroGs1tmD8FyRgZzg5AzSHTPKlmmAztXCD1Y/5NS2UkjnfI+fpgD+dT6XbGa7jQgjc2B7da1FsSltA2MsXyT+HH61a0az8uQXDdI5VPPpuwaly0NFHXUyrjSWa3lK/eicqR+NZogbyUPcOUIH5j+v5V6hZaWJPtG5f9aAx9iSw/pXK6rpP2aSRAu3ncOOM1MZ62ZTp21KGmRCRDGcMjHaR+HH07inix8mXy3bdCSdj/3T/n9afpykzEgbXI5yOoPY/Q1sXMaS2rSKmGkUh4/Rh/n8jWqZk0Nms0udMktpeqKJIz3A9vXBrkZYXt26gRucbh0BH9K6E6gEtYmJ5ibv1ZCcH8Rn9M1Vv7aNrV9oO3G7j8j/AEpknPTPvbJ4dTg/WrVncLJA1pKeGOVJ/hbFU51Ktu9PlPv6Go1J4IosK52PhPVWtNaigckLL+7cdiexr07HvXhcU8kVzFcqxDqwYexH+c17dY3C3dlBOuAJEDYHbIr1cBNuLi+h5OPppSUu5PQKWkr0Tzxe1JS9qbmgBacKZmlBoAdRR1oxQA7GKQ0tGKAI+9KOKCOaKAAmgUEUooAa4yMDOe2K8i8bERa7JEHZmwNxP516+SBzXi3i13l8R3MjA4LEID6A4/oa4cc/cO7AL32Ysa5O49B0q7AoOWPRVLE/Xj/Gqzgoqg9cZqWKTFrMO5x/M/415J6w68uPMklI6PIWI/E4qsM8Y70cswHdjU0IGQT0HQe9IY+3tzINz9D0B7/5NarPHaFAijMaY4/vHvWdFJi5DN9xD2phkLuGLsD+dIEjVtrzzbhTK3GCAPSta2uy+duAoP6e/wDKudtiArvjcAMZKgc1pW5IsXkfgtgLzjrUtlxVzZkMMTwySHJBDc9z2H51eYLdQrCnD/eJ9P8A65rl5rlrm4jWPLhec9B7V0ujJklcgnjcfX/JxUtmkY6k0tipW3UfdVwM+/8Ak1JYWISG4jPG5zj2zn/Cr9shmUuv3EPycds9fx/pUluu4uwA2u5X9eP61lc1UdTe0W0aeLaV5MKZ7YPzVha9Y7hvZBnOG+o6/wAq6rQSPtt2BgIH2qe2ME/zJqvrdqGEo2nEnIOKybtI2SvE83srJfOkLY+Qj9eD/jRLcKkDj/loku1vfnH9f5VLcyNZtOvTc3BrAvLrMsgHO8BvxH/1hXVF3OSSsyLUoiI0kUfe3E46cDOPyzUFndmWxeJ35QkAn0Izz+VXrmYPp27BOEIB/E/41zsT+Wzr/Dg59+DWhmx64lRo2OGAwAfaqLqUbAzUxba2c06cBoxIo+tMhjYJWUMhJ5GQK9Y8EXLXHh+NSx/dHaPcf5yPwryLO1xntivRPhrOWiu4CchSGA+tdmClarbuceNjelfsd8BRTqaa9k8YM000ppKAAdadikA5p1ACiilApaACg9KTGKCeKAENFJRQAUtJSigAIGK8l8ewJbeII1XPMAb8ea9azmvM/iTbv/atlMATviKfiDn+tcmNV6R14J2qnHT8uPTav8qiRsKw9aezCWNcfeC4P4dKjHGK8Y9kcnUH0zVggA/KP4unpmordd0wTpuHH41MmRJjowGKTGhCdoP1pgB25yBmnuw5yPpx2psfMiuRxngVJRbYNGIokJBIGcfjWjdyxokcAYnC5IHfI71l+cDeByQoAHI7VK8gZWkBG9+AO4FSy00XtO3TTHpHHGOQO7H1+n9a6zRbJpYpp5CViVioQ8FuMc+nGPzrD0q0S3tfNlbJB3BfU/8A6yK77RdLaKwTzvvkE7f9ojJP1rKbsb00TpCbPSJZpBzsDEe3p+lVNG2NamSThGV2z6dT/LmtnxERb+HryU4GYCsYHHsKz7W02W9tbqAWUKZ8dACBhfx4/L3rJM2aNzw3E4VUcYZoyx75JOR/Mj8Kua1AXiXC/OMkVctoUj2KOqBcN3B5P9R+dRapdx+XukIVhnjsazauylojx/xICNQWJT1G/wDMgVytwR57FmwuccdTXUapNFLe3l2XyCwWL6ZP+OfxrkZDukPPVuP8/jXXBNI45u7LdxL/AKAsfqCcemeB+gP51iMCoZvfH1q9MzSDePuqQoFVZF3EIO1aIyZC+NxGew/lUkQ3jaP4uKidsuSMdfSpEJUf7X8qoghlU43dyx4FegfDiB1kuZv4GUDP4/8A1q4QgmLju3FeseCLQW/hy3k2gNKCSfX5jXbgo81S/Y48bPlpW7nSmkzzS0Ac17J4whHNAFKeDRQAmKcKSloAdRTe9LQA6mk0rU00AJSA0GkoAfnikFIKdQA4YrF8SaMusWKqBiSNso3+ffH5Vs5oPIpSipKzHGTi7o8FvLX7He3EH91iB7VV6/hXR+N7f7P4luSB8r7X/MDNc25UEHsa8CpHlm0e/SlzRTHx53DB5q0D/pByM9xUumWUsxeXyysakLk++cfXoa7iXwDFYXQku72csoVnWC1DKMgHG4uPX0rCRvFHCJaS3Ds2PY1dj0uVnVQhJA4Fd7Y6Lp1uzFbe8kVzne8qRjP4qf51rR2OkGRSYV3AYw8zk/8AjqYqHI1UDyldIuHkl2j/AFZAbnpVi10S4uJMbWAA54r1e00jS5bsgW0atJ3EknP5qfWti30DTLctHGpBLZYibcCfxRf51LmCgjzbTNKuIJEVwWRSDg+v/wCqvQNJLykRsOnBb1OP/wBdaLaJF1hkHTHzjbn/AIECV/Wkhs2tnKspVhwV6GspyfU6aaXQyvExaVbeyXDl5EyP9ndn8iQK1baxS2tSzEsWB3N6n1P41bXSxLKs5UZTBBI7/wCe9TTxFY2TgYJzWfMaWOevtXvUjk8oKu47jxkj2/SuJ1W91y73MXGDkAV6Oml+e7YQkdz0AHuaWTw/FKVXfGcZyArP+qgiri/Iyqep4fcLdFCsitljxx1rLRS8hIBwowOO5r2/VfBf2qJljl2Ow27jC/Hr2rAh8C/Yj+8niwowN8Mqg4zznb71upaHO467nmLB4wY2B25z0qB4ii5I5K5r0bUfCck0bCF7eR2zkiYL+A3YrBu/C2qRBWNhP5YHLpGWUfiMimmJxOJx+864NS7dkR9W7ewp0sQivJAQflPGRSPIuc9l/U1oYmnoGnNqOrW1oAecs3txXsFnbi0s4bdcbY1CjFcT8OLHclzfyL824IpP613x65r2cFT5Yc3c8bG1OafL2FxRjFGaDXacYHrSUhNJmgBaWgUtAAOtOxSZApd1ACNTad1ooAaabinGkoABTqSigBaKBQaAOR8Y6BHqMIuAwR1wN2OvP+Ga4XUtAa1tBcxODGoBPevWNXi83T5VHXBx+VcLrqPb+GIyQf37jjtjqK8PHO1ZJHvZfFSw7bMvwtHJc3MjzMzhcDB7cV6vaWb60omkdvNjdBMwP3o8HnHTIx+teeeEbUxW0jMPmZq9B0d5I5CI2K7kZTjvwa8+cveO+nH3TPlQz3JldRt6IB0Uegp019Y2DL9qmAYjCxqMu30Aq5cWruhCcfSs238L79QFy7YkHIZuaxum9Te1loQXHjqx06/+znT7kyKB8zlUwCMj17GtnRfFUetW7XQtJbeFZBGS5BAOM9R9aNU8Gxatcpdy3UdtME8tmiGd6+4rT07w1bWuk/2VEzm2LFnYKAzn1Jqm4WJip82uxoiY/eUlGHcHFWFu4pYQspAkHEagcscE4H5dP/r1P9hCWqxIpOFA3Hk8VXktFjktUU/MZTnHpsasuaxty9Te08q1r88bLxxkr/jWTcSeZqAhkTylJwJCw2n2zng10tlBGltgKMAelYWtWaxSpPGNqmRAw7csBSv5CV9dSKS48kBUAO08NjIH0H9etc/rvimDSoGmunllCkZVfmIz0rqxZiSHBXkc1ymq+FoLqzurSSRytw29mIyQwOcj/Cri03qJxstNznv+FhaReyQwfZrtXn4U4RsnJGCAcj/PrWha3djPAwsLnLL1AJVgfcdaztK+H50/WLe9kniuY7f5o0C7CW7FqTV9AuX1T+0IwIZgekZ4IrSSj0ZnFT6oupcu03l3Y+0R55D9R9G6ihdNjtNVeNZHjt2iEqXPmMnlof4iF+8c8Y9abDBKUDyctV6/mR9Jgttn74qNz4/gBY7evqc9KIyJlE8v+IuqWmp+J7r7FAX3bFWZhgkBcHAxnn3rA/4R++KxYiJ3EDGPU4ra8Q24t/EltIV4bbkevzV2el2Tvqcsk3Pl7ccceo/lXTTfNKMe5zzio05S7F7QtMTSdKitk6gZY+prTpcUlfSRSirI+YbcndiGjtSGlqhCYoApRS5oABS5oApp60ABooooAdSUUYoATFB6U6kNADD1pc0HrSGgB1LTRTsUARTruiYVynjnyxpEcKKAsMq5Ht0rrn+6fpXN+L7Tz4H2j5J0DKe2eteLmatUjI9zKfepziUtCiX7MCvQmuz02IK0b46EE1x/ho5skB6g84rvbBcY44xXk1Nz1qaui3b2QMx3Ada1k06M/wAIqG1UZHqP5VrwnIFYtamy2KsdjGv8Iz9KsxWiKckVMF5p5O0UwuVrhgkT7QCwUkD1rmdFke/1Brg7l4G9W7nbhsDtyPyNbl1OI0klb7q8fU1DpUTSpuUbQ3LMO5o2TFa7R0toQYSM9qxvECSPYv5JG4//AK+Petu0iEaMMduKqXlvvRh6+lFtEStWzM0C9W7stojcCIBQ7/8ALTjk/nV65tlbDbfrWNpcn2bzrQ8PC/yj/YJ/p0/KugjbzF9qLalLYzH06Bx9zB9qpy6ZGvbP1rbZCre1QSKDmhoLnL3NkqtgL1qjfWY+8B9wbc+2Sf61006AhpP7nI+vasq9i22xHcDn601sS1qeT+KoV/tOyP8AEJVx+Yr0GaKOJg0ageYqk49sj+tclqNn9v8AElpEASEw7Y9jn+eK7K+VUlhhHVIlz9Tmu/Bx5q8F2OHGvkw02uuhWpCKWkNfSny6G0neloNAxRRTRTqAHjpSYpM0m6gBcUY96M0uaYCYo6UtIaQCZNGaSigApM80tJjNACin9qYM07PFAB9azb94zbi0uVDQbjtbuntWjUL2q3Eh3DPAOPWvNzOF6XN2PTyqpy1uXuc5p9qdNvpYM5jLbkOexrt7Fsqp9q5e9tWguI5NpC/droNNf92i968GequfQR0djetpWSQMvUVpw30R5ZChPXFZlpgkVtRW6kDIHSsrmtkyQXNueRJ+dMkvItpxliewqcWsXdBViO3jGMKKLhocrOTd3hWQERpyE9SfWtS3uVt9qheAKztWuI9O1pvN+VZQCpPTPpXMX0uvPrH2uHVIksB0thEDn6nrQlcdtD0+LUFC+1RXF/EQOeTXFW2u3PkAyxHcOu0VQvtV1yeSN7AWkUYPzidSzH8iMU/ISir3Osv7UebHe27YcHDD1BrSs7lCgUgq3oOR/jWJp199vmgtxjzMguAcgAda6eSxgl5aME0tQloMlxjqPxOKozOoPzSKB+dWpNNtjnCt+DGqE+nQocqpp3EiGeZHCpEMIvOT1Y+p/wAKxtTkIhbPXFa7xiPgdK57WJCImPtQtWJ6Iw9KgWLUZL94zLLK22FM8YHGfzq87M88sjtud2yx/wAPapLWyNtaCYE7wneoBxXsZVC85T7HkZtUcacafcd0prGnZpjda9w+fEzRRSZoGOopuacKAFpcUgpc0ABFJTqKAENJmlIpMcUwEzRSHijtSAXNFNNKDQA6g0ZoFAB3pwJRg69R29aTvSg1E6cZxcZbMunUlTkpx3RX1OVp7QgRBdp3Ek+lT6WwKKfamuoYFT0IxUWlEr8hPKnFeFj8LCgk4bHvYHFzrt8+51VouHDVtwzDbWDAxwuK1IDgV5R6yNLzMDNSpJwM9aoCTLdelSefjvUjE1G0gvE2zxq/oGGazP7GtVICRAD6VrDMgzVWa9ghfBfJHZapFK72HGyhjVF8sce1QzaTbSsQ8SkH2qX7baTLvM5THUEU9NStGkALED1IoDlkO0vTrTT3JghVM9SBWxv6VVUIyB42DD1BprT7ODSuS1cnlYL34NUpmBFOecMlVHfr3ouFitMTg5NcxqzgyrkEguOB6Z/wrobl/l+tczfMHvAP7oJrpwtP2tVR7nNiqvsqTn2J7q/86Py4kKqeuapUtBr6Whh4UI8sD5fEYqeIlzTGmkNLRmugwG0cUUnNADsUAULS0AFLSUtACikopMUAOpKTNLTASkI4pTSE0gExRijNOoATtQDig9aTFAC5pwpopRQA4jNVFP2fUD/df5h/WrWahuozJHuX768j39q5cZR9rSaW51YOv7Gqm9jftpcoDWnFL8vvXL6deBlUE1twTD1r5WSs7H1kXdXRpxkniqOr67p+jKhu7hIweBuOKsLKAODzWXq+jWmqwFbqBZPQkZxUq19SrGTeePrWRCltLlB/c5J/KspfF7yOoh067ZScbmiYf0rWg0hNPG2GFQg6YFaltHbsQJIsYrVcp004K1zCPiSJR89tcgk4wEqvc+LJYNuzTriSNjjKoScV1rw2hYEW64GfxpZRZrD5a267ux7g0WRry6HN6d48jt2+YvCD1SZSv866mx8UabqknlwXCNJjJAbOKx5tMF4214FK8j5h2q9puhWOnRAW9tGj92VcE1ErHNUSubZYgHnioy+ByaaX2pgmoJZgqE5qTIhvJQqZrmwxkkeQ/wAR4+lXNRumkYRqeTVQAAADoK9vKqDu6rPDzavoqSHcUhpKQ17Z4QlFGKXFAxO9LgUYozQAUUUUAFLSUuaAAUUCjFACUUoFKelADabmnU0igAHWlzSCgnNACUdqKUUAA4pc0UYoAXtS00dKd2oEYj3xtNVmjbhCwIPpkV0dreb0BBFcvqUW/UJuOw/kKLK8ktXCOSV7V8rikvay9T63CS/dR9Du4JSe9XY33DBrAsrtZFGGFaiSHgiuJo7EWzHk+3pUD2rYJT5farEbbqnSJ3GMYouWm0ZXlzBtpK4+lWIbdsgk5rSFlkUogMecincfPLuV1iwDkj8KR5BGvFOlbg8c1SkcjLN0pEjpZuM1kX2oLDGzM2AKj1HVEhUjP4VzM7zXZMkhIQdFrSMTOUjahJkAmY8uAR7D0qY1FCAsKD0Ufyp+a+vpQUIKKPjKs3OblICcUnWhqbWhApopKWgApOKKKAFopKWgBKWjFFACilFIKM0AFLS4pMUAIaaacaSgBppop9FADe1OFIetANADqKSl70AFLS9Kx/EOvwaBp5nfDzNxFFn7x/wFKUlFXY4xcnZD7iPdqDj/AGRUc9nldw6ik0+3u4zCb9i11LEssmf4S3OAOwHA/Ctw24ZcYr5PFT5q0mj67CwcaMYvojBhmktnGDx6V0Wn6mkgCscGsm7sivIFVEDK3GQRWLszZaHfwSocGtKKVQO1cFbarLCAGG4Vox66u3kn8ajlLUjsxcqBximSThhXLLrsYH3qjl19cfJk/QUco7o355URSSQK5jVdYC5ji5aqd3qdzdEgEqtQW9k0zZIJzTskJu5BFbyXcoeTJzVu5tRHbt9K2LWy8uMZAzUGqRhIG+lNPUTjZFZFwij2p1ZdtqTxa7faDfYW8tG+RunnRkAq31wRmtSvsaU1OKcT4upBwm0xCeKbTiKAKsgSiiigBKKDxSjpQA2gdaUigDFAC0UhNAoAXpRuNL2pMCmBJSGkzRnikAhNNJ4pSaaaAEzTqbSigBD1pRSYyacBQAtHQ0VXvb23sLV7m5kEcSDJJ/kPehu2rBK+iHXd3DZW0lxcSCOKMZZjXl32iXxf4ztFcHyZJ1RE/uxg5P44BNQeI/EtxrtxsGYrRD+7iz192963PhlZi48YQN/zyhd/5D+teVicR7R8sdj1sLh/Zrmlueq+IbPydYt5gMJNbrj6jIP9KdBH8vNdRqemf2loSOi5uLX5lHcr3H9fwrBt1G2vDrq0z3MPJOBRubUMDxWRNabX4Fda0IZTWbc2uD0rJM2aOf8As5PAHNH2WTsprZFuO4q1axIJMOoxTCxzyWcp/hNSi0I7V0s0UYAWMCq/2UDnFFwsY8dnlhxWzZ2gVRxgVJFbjcOK04odqikx2K/kBVrNu7Y3EiQAZMjBR+JxW244NT6FYfadWEzDMduN5P8Atdv8fwpwTckkTN2i2zyb4z2smkeNrHWLL5HaILkd2Q9/qGA/CtPR9Wg1nT0uoCOeHTPKN3Bq/wDGi1E+hw3RHzR3YAPsyt/gK8X0XWbnQtQ8+E7kJxJETw4/xr3sNX9m7PY8DE0Paxut0ezmgGqWm6na6tZJdWr7kbgg9VPoauV66aaujx2mnZgabmnUlABRmikxQAZpwFIBS0AFKAKSgdaYDsUtFFADc0hpaO1IBlLRS9qYCUgNFQ3N1b2kRluJo4kH8TtgUr2BK5OKdkDqa43U/iBZwZj0+JrmT++3yoP6n9K5DUvEOqarkXFyyxn/AJZJ8q/l3/Guapi4R0Wp1U8JUnvoejan4q0nTQyvcCaUf8s4fmOfr0Feba3rt3rl15kx2Qqf3cQPC/4n3rNC85JzS4xXBWxM6mmyPQo4WFN33ZGQMivRvhOv/FXH3tXH6rXnmMtXe/DGbyfG1ipOBKrp/wCOk/0rnOmx9HWBMTD+63WsTWdK+wXXnwr/AKNKcjH8Den0rdt1yoBq5sSeBreZQyMMEGsatPnVjSnPkdziwmVqvcxcdK1b2wfTrjy2+aJj8j+vsfeq0iAr6157TTsz0U1JXRlxRZJHWrP2QFcilRdr9avJtZRTGVI7UgZpWhAHSrw2gVXlYZwKQXGQxDOcVZI/KmRrgZpzuEXJpARMrMQqKWZjhQO5rqbSyXTtOEOQZW+aRvU1W0TTSi/brhcOR+7U/wAI9frWlL82Sa7KFO3vM4q9TmfKtjyv4vKF8HnPU3UYH5GvnmZcSHivoH41TBPD1lAOsl0G/JW/xFeB3C5eus5SXSNZu9DvBPbPlTw8Z+649/8AGvR9N8baPfBVkla1lPVZhgZ/3un8q8rZeKRAFcFhkd63pYiVPRbGFXDwqavc93jdJUDxuroejKcg06vHLK+vdMfzLG7ki7lQcqfqDwa6rT/HkigJqVsG/wCmsH9VP+Nd1PGQlpLQ4KmCnHWOp3FJ36VSsNYsNTXNpcpIe6dGH4Hmr1dSaaujkcWnZiClooNMQUuabRTAeDS1GKdmgAxQelUNR1vTdJX/AEu6RGxwg5Y/gK5LUPiKMFNPs/pJMf8A2Uf41jOtCG7NadCc/hR3X1rG1HxTpGm7lku1kkH/ACzi+Y/4CvMr/XtU1Qn7TdyFD/Ap2r+QrOCZPNclTHdII7KeB/nZ2Go/EC7n3Jp8C26f33+Zv8B+tcvc3V1qEvmXM8kzersTTFjJ6DirCIEHSuOdWc/iZ206MKfwojSIKvSmsMtipmNMRcgt+VZGomB2pCtSYpCM0ARqvzV0fhe6Nj4k0u5zgJcpk+xOD+hNYKocirUDksNpI2nII65oA+vrbDIDVsCsbRLv7XpVpcjpNCj/AJgGtlGBFJgE0EV3A0Ey7lb9PeuYvLGWwm8uTLIfuPjg/wD166sD0p0sEdzAYpkDIexrCrTUzWlVcH5HByR85FCl1PqK0dS06XT35y8J+6/9DVEYPNcjTTszvi+ZXQm49KcEyckUADPWldwopDHs4Ree1aGjaUbx1vLlf3CnMaH+P3PtRpOjtdkXF0pEI5VD/H/9aulPQKowB2relSv70jmrVvsxEc7uB0qKToalwAKglPBrrRxniHxsug2oaXaA/cjeVh9SAP5GvHpx8xrv/infG88d3ag7kt40hH5bj+rGuElUMMjmqApEUuzIqQr3pQKAFhOVKntUuPzqFflfPrxU4FCAQblYMhKsDkEHBFbdh4u1Wxwkji5jH8MvX8G6/wA6xe9BGauE5Qd4sidOM1aSPQrDxrpl1hbgvayH++Mr+Y/rXQQzw3EYkglSVD/EjAj9K8ZZcVJb3NxaSeZbTSRP6o2K7IY2S+JXOOeAi9Yux7LSjFec2XjfUrchbhI7lPVhtb8xx+ldRp/jHSr3CySG2kPaUcf99dPzxXXDE059TinhqkN0buaMilR0kQOjKynoVOQadXRcwPBndpHLOxZjySTkmhUyakCZNPC+1fPH0SRGFp6pT9vNOVcVIxVTApc4FKc009KYDGOTj1qYKAuKqTxmVcAkEdCKiW5mt2CzruX+8KAL+KNvFNSVJF3KwIpGO7gDAoARm4wOlT27dMVXx3qSH72O1ID6b+G139t8Dac+ctEpib/gJIH6Yrso+DXl/wAEb0z6BqNkTkwXAkA9A64/mpr1ILigCdKlFQpUoPFSASRpLGUkUMp4IIrmNT0aS1ZpbcM8PUr1K/8A1q6WaeO3iMkjYA/Ws2Ka4ubkTybo41+6h4GP61E4KS1NKdRwd0ct84A+U5PArc0nQmZhPfD3WI/1/wAKv3V/sTMMeT2ZhxVmxv47yPAwsi/eWs40Undms8Q5Ky0LRGOB0pvSntzTDW5zjGNQSD5TU2OTWP4nvxpXhjU74nBhtnZT/tY4/XFNCPl7xFe/2h4g1G9B4muHdfpuOP0rKNStzUJqgInXnjpTcVMRzx+NRuyopZmAHrQA0rxUqHKgnr3qj501y22Bdqd3P9KuwRCGIKXLHqSaQC9KKU9aSmApGRzTcU4UEUAMZeKaVqTtSY5piZZ0/Vr7S5A9pOyDuh5VvqK6qPx+PLXfp5L4+YrLgZ9uK4tuBQBgAVtCvOGiZhPD05u8kRbTt6UoBp5FGKwOgTHFOC0o4FHagAqNuT1p5qMmkAEDNNYArgjI9KcBkcGnBcUAVo7ZYpCVyM9u1TE80rDmkoAQ0+L74ppNKnBoA9W+DN+1p4muYt37qWAeYP8AgQAP4Fh+BNfQG2vmf4W3CxeOrGKT/V3KSQN75U4/UCvpKydmh2SnMsR2OT3x0P4jB/GhgTqKJ7iK2gaWVgqKOaJHSKNpHYKijJJrC2y67ceZIGS1Q/u0P8XuaTGhyXDajc+fNuWFPuJ6fWtZowy4bBqKS0VLRljUAqOKnihcYLgGkBEIkkJDqNuc8jvVC8ha2k8+ElWXkEVuCMelRzwCSPYehNAFTTNVjv0KHCzr95fX3FXjXLalps1rcLcWZKyIcjFbOmaol/EVcbLhOJIz/Me1MLF3FeefGS/+zeCHtlbBuZo0Pvzux/46fyr0U14j8bNQ8waVaA/6xpLgj/Z4VP8A2b86Yjx9jxUdOduaj5pgBzUL26SsGcFiOg7VP2ozxQAi4AAAwB2paQ8n3o6dTzQAUoFJQKAFwRS9qSkzQAtGeKTOKM8UANc9B6nFLuFRn5p1HYDNMZ/mPegCftSZp1NPWkAUo6U3vTh1pgI1REZzUrVGeM0gI7ZjhlJ6MRU56VWX5LojswzVnHrQA3tSU4jikxQAylTqKNuKBQB0Hhi9/s/xHpd3nAhuo3J9gwz+lfVszC1nW4biNxskPp6H+Y/Gvj2FsV9e6Bdrqnh3T7tgGFxbRyEHnqoJpsCZUTURufmAH5V/ve59qtFFjUBRgD0pqYWUqBgdhUxGRipGNGCualB4qAHaSnbFTDgD6UgHUhNJmkY8UARlVbkgGqF7p43C6tv3dygypHf2NaHamOTuAoAoxagt9bCEfJOx2uh6r6/pXz/8Xr77V49nhU/LaQRwjHQcbj/6FX0eERcuFUMepxXyR4l1A6r4m1S/zlZrmRl/3dxx+mKoRjP1poJpW60DrTAQOCSPSlFI6Bueh9RTELq2DyPWgCSoXYmdEHTkn/P41MTgetQw/NJJIeedo/CgCalHNN5pwoATNLikNN3UAO9qQkCkzTJGwKQDYjl5H/CqznLk5qwh22oJ6nmqhPJ4oA0c8YoPWkppoAXJpwNR54pQc0APPSmnHan+1NwKaArz/KUk/utz9DVkHK1FKoeNl9RToH8yJT3xzQA803rTscU2kAjVH7VIcU3HNAFmE8V9N/Ce++2fD7TwWy8BeFvbDEj9CK+YYj2r3j4E3+/SNVsC2fJnWUD2Zcf+yUPYD1ZjiYGp81BL1U1MORUjGzfdLDqKlzxUbDMbD2qQ+1ACUh5xS0p4FADRUf3pDT+1Mj6k0AZnijUBpPhXU77ODDbOyn/axx+uK+SHOFJ9a+jfjJqH2PwFLAD813NHD+Gdx/8AQf1r5vc4FNCIz1pRTc5p1UAvBopM0e9ADZX2Rs2egpsI8uFVPXv9abMdzImeCckewqWgAzThSA8UhPFAAx96jzSO2aQGgB9QTsSpA78VKelVmO6ZVz3zQBPKP3SqPSqpQZ61ZnbAqmWOaQGhG24daUioIGyoqc0DI2zTkNNbofWmqcGgCx170YpitUnagBpFQw/u5ZI+gzuH0NWDxUEhCzxt6/Kf8/hTETUhHFOA4pMUAMNMPWn9qYw60gJYznFeqfBG+Fv4xubRmwt1aMAPVlII/TdXlMZ7d66/4eXxsPH2izAkBrgRH6OCv/s1AH1LMPkp0ZygocZQ0kP3KkY9jx+NOc4FNPOPqKdjPBoAajEnHFOYZxTUiCHO5ifc09jxQAw8A02IfLmnN92kThKAPFvjvqObrSdMU/dR53H1IVf5NXjMnJ613PxZvzffES/XnbbKkK59lBP6k1wjHkZqkIbjmloxR0pgJjmjOBRTZG2qSewzSAYp3TM2Pu/L/jUtRRAiNc9TyfqakHNMBTwKYzcU5vSoHakApbmlAzUWealXgUAIxwtQW/zXDN2FSTthTUdocK59TQAXD/MargEipmXc9LtFAH//2Q==" alt="陈震涛证件照">
+    </div>
+  </header>
+
+  <div class="wrap">
+    <div class="skills">
+      <span class="skill" data-editable>Excel（数据透视表 / 函数 / 台账）</span>
+      <span class="skill" data-editable>Word / PPT</span>
+      <span class="skill" data-editable>ArcGIS / ENVI</span>
+      <span class="skill" data-editable>CAD</span>
+      <span class="skill" data-editable>AI 工具（ChatGPT / 豆包 / Claude）</span>
+      <span class="skill" data-editable>英语四级</span>
+      <span class="skill" data-editable>C2 驾驶证</span>
+    </div>
+
+    <nav class="nav">
+      <a href="#operations">运营经历</a>
+      <a href="#projects">项目经历</a>
+      <a href="#product">产品经历</a>
+      <a href="#marketing">市场经历</a>
+      <a href="#evaluation">自我评价</a>
+    </nav>
+
+    <!-- ===== 运营经历 ===== -->
+    <section id="operations">
+      <div class="sec-head">
+        <span class="sec-num">01</span>
+        <h2 data-editable>运营经历</h2>
+        <span class="sub" data-editable>团队事务运营、社团活动运营与行政文档运营</span>
+      </div>
+
+      <article class="card">
+        <div class="card-top">
+          <span class="role" data-editable>班长（团队负责人）</span>
+          <span class="org" data-editable>班级集体 30+ 人</span>
+          <span class="date" data-editable>2023.09 – 2027.06</span>
+        </div>
+        <ul>
+          <li data-editable>制度搭建：拟定 30 余项班级管理规则，搭建标准化事务流程，明确节点与责任人。</li>
+          <li data-editable>团队统筹：统筹 30 余人考勤、绩效、评优与分工，协调多方诉求，推动事项闭环落地。</li>
+          <li data-editable>数据运营：用 Excel 搭建人员、考勤、评优多维台账，定期汇总数据并输出汇报与复盘。</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <div class="card-top">
+          <span class="role" data-editable>副社长</span>
+          <span class="org" data-editable>桌游社</span>
+          <span class="date" data-editable>2023.09 – 2026.06</span>
+        </div>
+        <ul>
+          <li data-editable>社团运营：协助社长统筹社团管理，调研社员意向、设计活动激励方案，提升参与度与留存。</li>
+          <li data-editable>资源运营：管理活动物资出入库台账，定期盘点对账，优化物资损耗。</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <div class="card-top">
+          <span class="role" data-editable>办公室助理</span>
+          <span class="org" data-editable>学院</span>
+          <span class="date" data-editable>2024.03 – 2026.05</span>
+        </div>
+        <ul>
+          <li data-editable>文档运营：归档百余份资料，建立统一文档规范，可独立完成材料撰写整理。</li>
+          <li data-editable>数据处理：统计汇总业务数据，完成 60 余份上报材料，多任务并行高效交付。</li>
+          <li data-editable>接待统筹：负责来访对接、值班与物资管理，保障日常事务有序落地。</li>
+        </ul>
+      </article>
+    </section>
+
+    <!-- ===== 项目经历 ===== -->
+    <section id="projects">
+      <div class="sec-head">
+        <span class="sec-num">02</span>
+        <h2 data-editable>项目经历</h2>
+        <span class="sub" data-editable>项目策划、资源协调、进度管控、现场执行与复盘交付</span>
+      </div>
+
+      <article class="card">
+        <div class="card-top">
+          <span class="role" data-editable>三下乡社会实践项目</span>
+          <span class="org" data-editable>带队副队长</span>
+          <span class="date" data-editable>2025.07</span>
+        </div>
+        <ul>
+          <li data-editable>统筹行程规划、预算管控与物资采购，协调人员分工与现场调度。</li>
+          <li data-editable>及时处置突发状况，保障项目按进度落地；牵头项目总结、材料整理与成果汇总，项目顺利结项。</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <div class="card-top">
+          <span class="role" data-editable>安徽省水科院评估项目</span>
+          <span class="org" data-editable>项目助理（个人项目）</span>
+          <span class="date" data-editable>2026 年暑假</span>
+        </div>
+        <ul>
+          <li data-editable>协助项目资料归集、基础数据核查、图表整理与文档归档，保障数据准确可追溯。</li>
+          <li data-editable>协助现场资料采集与素材整理，按节点跟进阶段性任务，完成成果汇总。</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <div class="card-top">
+          <span class="role" data-editable>教育机构活动项目</span>
+          <span class="org" data-editable>项目助理</span>
+          <span class="date" data-editable>2023.07 – 2025.08 · 连续 3 个暑期</span>
+        </div>
+        <ul>
+          <li data-editable>协助活动项目落地，负责人员调度、物料筹备与现场统筹。</li>
+          <li data-editable>建立用户跟进台账，收集反馈并输出复盘报告，配合优化活动执行细节。</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <div class="card-top">
+          <span class="role" data-editable>紫蓬山测绘实习</span>
+          <span class="org" data-editable>外业勘测与内业成图</span>
+          <span class="date" data-editable>2025.12.25 – 2026.01.10</span>
+        </div>
+        <ul>
+          <li data-editable>完成 20 余处点位外业测量，操作全站仪、水准仪开展地形数据采集。</li>
+          <li data-editable>整理上百组实测数据并核对校正误差，绘制 15 余份测绘成果图纸，撰写实习报告。</li>
+        </ul>
+      </article>
+    </section>
+
+    <!-- ===== 产品经历 ===== -->
+    <section id="product">
+      <div class="sec-head">
+        <span class="sec-num">03</span>
+        <h2 data-editable>产品经历</h2>
+        <span class="sub" data-editable>用户研究、需求洞察、方案迭代与 AI 工具实践</span>
+      </div>
+
+      <article class="card">
+        <div class="card-top">
+          <span class="role" data-editable>桌游社用户增长与活动产品化</span>
+          <span class="org" data-editable>副社长</span>
+          <span class="date" data-editable>2023.09 – 2026.06</span>
+        </div>
+        <ul>
+          <li data-editable>用户研究：调研社员意向与需求，沉淀反馈清单，反哺活动品类设计与排期。</li>
+          <li data-editable>增长流程：设计“报名筛选 → 面试考核 → 新人定岗”招新漏斗，累计招募 50 余人。</li>
+          <li data-editable>方案迭代：策划 8 场主题活动与赛事，收集参与者反馈，复盘参与数据并迭代方案与激励机制。</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <div class="card-top">
+          <span class="role" data-editable>教育机构用户体验优化</span>
+          <span class="org" data-editable>实习助理</span>
+          <span class="date" data-editable>2023.07 – 2025.08</span>
+        </div>
+        <ul>
+          <li data-editable>对接 20 余组家庭用户，建立跟进台账，记录需求与反馈，输出 10 余份复盘报告。</li>
+          <li data-editable>基于反馈优化活动话术与流程，参与线下体验课、宣讲活动的方案设计与现场验证。</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <div class="card-top">
+          <span class="role" data-editable>AI 工具实践</span>
+          <span class="org" data-editable>贯穿校园与实习项目</span>
+          <span class="date" data-editable>长期</span>
+        </div>
+        <ul>
+          <li data-editable>日常使用 ChatGPT、豆包、Claude 辅助文案撰写、方案构思与资料梳理。</li>
+          <li data-editable>在水科院项目中运用 AI 辅助文献检索、数据清洗与报告框架搭建，提升资料整理效率。</li>
+        </ul>
+      </article>
+    </section>
+
+    <!-- ===== 市场经历 ===== -->
+    <section id="marketing">
+      <div class="sec-head">
+        <span class="sec-num">04</span>
+        <h2 data-editable>市场经历</h2>
+        <span class="sub" data-editable>用户对接、活动策划、推广增长与客户沟通</span>
+      </div>
+
+      <article class="card">
+        <div class="card-top">
+          <span class="role" data-editable>教育机构市场活动助理</span>
+          <span class="org" data-editable>某教育培训机构</span>
+          <span class="date" data-editable>2023.07 – 2025.08 · 连续 3 个暑期</span>
+        </div>
+        <ul>
+          <li data-editable>用户运营：累计对接 20 余组家庭用户，建立跟进台账并定期同步，维护客户关系、推动满意度。</li>
+          <li data-editable>活动策划：参与落地线下体验课、主题宣讲等活动 6 场，负责现场统筹、物料筹备与人员分工，单场触达 40 余人。</li>
+          <li data-editable>数据复盘：收集活动反馈与用户数据，输出复盘报告 10 余份，基于反馈优化活动流程与话术。</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <div class="card-top">
+          <span class="role" data-editable>家教老师</span>
+          <span class="org" data-editable>一对一辅导</span>
+          <span class="date" data-editable>2024.05 – 2026.06</span>
+        </div>
+        <ul>
+          <li data-editable>针对学生情况定制学习方案，课后跟踪学习效果。</li>
+          <li data-editable>深度对接学生与家长，挖掘学习需求，积累客户沟通与需求把控经验。</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <div class="card-top">
+          <span class="role" data-editable>桌游社推广增长</span>
+          <span class="org" data-editable>副社长</span>
+          <span class="date" data-editable>2023.09 – 2026.06</span>
+        </div>
+        <ul>
+          <li data-editable>统筹年度招新推广，通过线下场景与社群传播完成 50 余人扩充。</li>
+          <li data-editable>运营 8 场线下主题活动与赛事，提升社团参与度与品牌传播。</li>
+        </ul>
+      </article>
+    </section>
+
+    <!-- ===== 自我评价 ===== -->
+    <section id="evaluation">
+      <div class="sec-head">
+        <span class="sec-num">05</span>
+        <h2 data-editable>自我评价</h2>
+        <span class="sub" data-editable>个人能力画像与求职适配度</span>
+      </div>
+
+      <article class="card">
+        <ul>
+          <li data-editable>跨模块实践：3 段暑期教培机构实习，叠加班长、社团副社长、三下乡带队副队长与学院办公室助理经历，熟悉人员统筹、活动落地、用户对接与项目复盘全流程。</li>
+          <li data-editable>数据与工具：熟练 Excel 台账搭建、数据透视表与复盘报告输出；日常使用 ChatGPT、豆包、Claude 辅助文案撰写、方案构思与流程梳理，对 AI 赋能业务保持开放探索。</li>
+          <li data-editable>做事风格：目标导向、严谨细致，擅长多方协调与事项闭环，可多任务并行推进；沟通表达清晰，适配运营、项目、产品、市场等多模块轮岗。</li>
+          <li data-editable>能力底色：具备用户研究、需求挖掘、资料归档与文档撰写能力，能从用户反馈与业务数据中提炼问题、形成洞察并迭代方案。</li>
+        </ul>
+      </article>
+    </section>
+  </div>
+
+  <footer>
+    <div class="contact" data-editable>电话：151-0590-7921 ｜ 邮箱：2476456746@qq.com ｜ 现居：安徽合肥</div>
+    <div data-editable>本页面支持在线编辑：点击右上角「进入编辑」即可修改文字，完成后导出 HTML 保存。</div>
+  </footer>
+</div>
+
+<script>
+(function(){
+  var STORAGE_KEY = "portfolio-czt-edited-html-v3";
+  var portfolio = document.getElementById("portfolio");
+  var editBtn = document.getElementById("editBtn");
+  var exportBtn = document.getElementById("exportBtn");
+  var resetBtn = document.getElementById("resetBtn");
+  var editing = false;
+
+  function applyEditable(on){
+    var nodes = portfolio.querySelectorAll("[data-editable]");
+    nodes.forEach(function(n){
+      if(on){ n.setAttribute("contenteditable","true"); }
+      else{ n.removeAttribute("contenteditable"); }
+    });
+  }
+
+  function saveCurrent(){
+    try{
+      localStorage.setItem(STORAGE_KEY, portfolio.innerHTML);
+    }catch(e){}
+  }
+
+  function restoreSaved(){
+    try{
+      var saved = localStorage.getItem(STORAGE_KEY);
+      if(saved){ portfolio.innerHTML = saved; }
+    }catch(e){}
+  }
+
+  editBtn.addEventListener("click", function(){
+    editing = !editing;
+    document.body.classList.toggle("editing", editing);
+    applyEditable(editing);
+    editBtn.textContent = editing ? "退出编辑" : "进入编辑";
+    if(editing){ saveCurrent(); }
+  });
+
+  portfolio.addEventListener("input", function(){
+    if(editing){ saveCurrent(); }
+  });
+
+  exportBtn.addEventListener("click", function(){
+    var html = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+    var blob = new Blob([html], {type:"text/html;charset=utf-8"});
+    var a = document.createElement("a");
+    var url = URL.createObjectURL(blob);
+    a.href = url;
+    a.download = "陈震涛-个人介绍网页.html";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  });
+
+  resetBtn.addEventListener("click", function(){
+    if(confirm("确定恢复为初始内容？当前本机保存的修改将被清除。")){
+      localStorage.removeItem(STORAGE_KEY);
+      location.reload();
+    }
+  });
+
+  var toTop = document.getElementById("toTop");
+  function toggleTop(){
+    toTop.classList.toggle("show", window.scrollY > 400);
+  }
+  window.addEventListener("scroll", toggleTop, {passive:true});
+  toTop.addEventListener("click", function(){
+    window.scrollTo({top:0, behavior:"smooth"});
+  });
+  toggleTop();
+
+  restoreSaved();
+})();
+</script>
+</body>
+</html>
